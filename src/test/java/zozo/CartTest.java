@@ -1,6 +1,7 @@
 package zozo;
 
-import org.junit.jupiter.api.Nested;
+import java.util.List;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -20,35 +21,16 @@ import org.junit.jupiter.api.Test;
  */
 public class CartTest {
 
-    @Nested
-    public class カートには購入できる上限金額を設定できる {
+  @Test
+  public void カートには買いたい商品を追加できる_数量も指定できる() {
+    var cart = new Cart();
+    var good = new Good();
 
-    }
+    // TODO: cartに商品以外を追加することがある？(ノベルティなど？)
+    var actual = cart.addGoods(good, 1);
+    var expected = new Cart(List.of(good));
 
-    @Nested
-    public class カートに商品とその数量を追加する {
-        @Nested
-        public class 合計金額が上限を超えないとき {
-            @Test
-            public void カートオブジェクトにTシャツを1個追加する() {
-            }
-            @Test
-            public void カートオブジェクトにTシャツを99個追加する() {
-            }
-            @Test
-            public void カートオブジェクトにTシャツを100個追加する() {
-            }
-        }
-        @Nested
-        public class 合計金額が上限を超えるとき {
-            @Test
-            public void カートオブジェクトにTシャツを1個追加する() {
-            }
-
-            @Test
-            public void カートオブジェクトにTシャツを99個追加する() {
-            }
-        }
-    }
+    Assertions.assertEquals(expected, actual);
+  }
 
 }
