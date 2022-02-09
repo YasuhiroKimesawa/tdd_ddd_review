@@ -42,7 +42,9 @@ public class Cart {
 
   public Cart addGoods(Good good, int i) {
     var list = new ArrayList<>(goods);
-    list.add(good);
+    for (int n = 1; n <= i; n++) {
+      list.add(good);
+    }
     return new Cart(list);
   }
 }

@@ -33,4 +33,15 @@ public class CartTest {
     Assertions.assertEquals(expected, actual);
   }
 
+  @Test
+  public void カートには買いたい商品を追加できる_数量も指定できる_2() {
+    var cart = new Cart();
+    var good = new Good();
+
+    // TODO: cartに商品以外を追加することがある？(ノベルティなど？)
+    var actual = cart.addGoods(good, 2);
+    var expected = new Cart(List.of(good, good));
+
+    Assertions.assertEquals(expected, actual);
+  }
 }
