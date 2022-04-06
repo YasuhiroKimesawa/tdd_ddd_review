@@ -20,7 +20,16 @@ public class CartItem {
         return Objects.hash(itemName, quantity, price);
     }
 
-    public CartItem(String itemName, int quantity, int price) {
+    static final int CART_QUANTITY_MAX = 99;
+    static final int CART_QUANTITY_MIN = 1;
+
+    public CartItem(String itemName, int quantity, int price) throws AddCartException {
+        if (quantity < CART_QUANTITY_MIN) {
+            throw new AddCartException();
+        }
+        if (quantity > CART_QUANTITY_MAX) {
+            throw new AddCartException();
+        }
         this.itemName = itemName;
         this.quantity = quantity;
         this.price = price;
@@ -36,5 +45,9 @@ public class CartItem {
 
     public String getItemName() {
         return itemName;
+    }
+
+    public int totalPrice() {
+        return price * quantity;
     }
 }

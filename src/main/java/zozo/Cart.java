@@ -8,17 +8,35 @@ public class Cart {
 
     private List<CartItem> cartItems;
 
-    public Cart(int upperLimit) {
+    public Cart(int upperLimit, List<CartItem> cartItems) {
         this.upperLimit = upperLimit;
-        cartItems = new ArrayList<>();
+        this.cartItems = cartItems;
+    }
+
+    public Cart(int upperLimit) {
+        this(upperLimit, new ArrayList<>());
     }
 
     public int upperLimit() {
         return upperLimit;
     }
 
-    public void addItem(String itemName, int quantity, int price) {
-        cartItems.add(new CartItem(itemName, quantity, price));
+    public int totalPrice() {
+        return cartItems.stream()
+                .reduce(0, (s, e) -> s + e.totalPrice(), Integer::sum);
+    }
+
+    public Cart addItem(String itemName, int quantity, int price)
+            throws AddCartException {
+        var cartItem = new CartItem(itemName, quantity, price);
+        var totalPrice = totalPrice() + cartItem.totalPrice();
+        if (totalPrice > upperLimit) {
+            throw new AddCartException();
+        } else {
+            var clonedCartItems = new ArrayList<>(cartItems);
+            clonedCartItems.add(cartItem);
+            return new Cart(upperLimit, clonedCartItems);
+        }
     }
 
     public int itemSize() {
@@ -27,5 +45,12 @@ public class Cart {
 
     public boolean containsByName(String itemName) {
         return cartItems.stream().anyMatch(element -> element.getItemName().equals(itemName));
+    }
+
+    public int itemSizeByName(String itemName) {
+        var count = cartItems.stream()
+                .filter(item -> item.getItemName().equals(itemName))
+                .count();
+        return (int) count;
     }
 }
