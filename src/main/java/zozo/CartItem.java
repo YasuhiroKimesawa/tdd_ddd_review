@@ -47,6 +47,10 @@ public class CartItem {
         return itemName;
     }
 
+    public CartItem withQuantity(int value) throws AddCartException {
+        return new CartItem(itemName, value, price);
+    }
+
     public int totalPrice() {
         return price * quantity;
     }
