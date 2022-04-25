@@ -57,18 +57,32 @@ public class Cart {
     if (!containsByName(itemName)) {
       throw new AddCartException();
     }
-    var clonedCartItems = new ArrayList<>(cartItems);
-    var updateCartItems =
-        clonedCartItems.stream()
+    var clonedCartItems =
+        cartItems.stream()
             .filter(element -> !element.getItemName().equals(itemName))
             .collect(Collectors.toList());
-    return new Cart(upperLimit, updateCartItems);
+    return new Cart(upperLimit, clonedCartItems);
   }
 
   public Cart updateQuantity(String itemName, int quantity) throws AddCartException {
     if (!containsByName(itemName)) {
       throw new AddCartException();
     }
+    // 相性が悪すぎる......
+    //        var clonedCartItems = cartItems.stream().map(element ->
+    //                {
+    //                    if (element.getItemName().equals(itemName)) {
+    //                        try {
+    //                            return element.withQuantity(quantity);
+    //                        } catch (AddCartException e) {
+    //                            throw new RuntimeException(e);
+    //                        }
+    //                    } else {
+    //                        return element;
+    //                    }
+    //                }
+    //        ).collect(Collectors.toList());
+
     var clonedCartItems = new ArrayList<CartItem>();
     for (CartItem element : cartItems) {
       if (element.getItemName().equals(itemName)) {
