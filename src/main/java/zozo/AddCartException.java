@@ -1,4 +1,3 @@
 package zozo;
 
-public class AddCartException extends Exception {
-}
+public class AddCartException extends Exception {}
