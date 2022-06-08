@@ -3,20 +3,28 @@ package zozo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class Cart {
+
+  private UUID id;
+
+  private UUID userAccountId;
+
   private int upperLimit;
 
   private List<CartItem> cartItems;
 
-  public Cart(int upperLimit, List<CartItem> cartItems) {
+  public Cart(UUID id, UUID userAccountId, int upperLimit, List<CartItem> cartItems) {
+    this.id = id;
+    this.userAccountId = userAccountId;
     this.upperLimit = upperLimit;
     this.cartItems = cartItems;
   }
 
-  public Cart(int upperLimit) {
-    this(upperLimit, new ArrayList<>());
+  public Cart(UUID id, UUID userAccountId, int upperLimit) {
+    this(id, userAccountId, upperLimit, new ArrayList<>());
   }
 
   public int upperLimit() {
@@ -36,7 +44,7 @@ public class Cart {
     } else {
       var clonedCartItems = new ArrayList<>(cartItems);
       clonedCartItems.add(cartItem);
-      return new Cart(upperLimit, clonedCartItems);
+      return new Cart(id, userAccountId, upperLimit, clonedCartItems);
     }
   }
 
@@ -61,7 +69,7 @@ public class Cart {
         cartItems.stream()
             .filter(element -> !element.getItemName().equals(itemName))
             .collect(Collectors.toList());
-    return new Cart(upperLimit, clonedCartItems);
+    return new Cart(id, userAccountId, upperLimit, clonedCartItems);
   }
 
   public Cart updateQuantity(String itemName, int quantity) throws AddCartException {
@@ -91,7 +99,7 @@ public class Cart {
         clonedCartItems.add(element);
       }
     }
-    return new Cart(upperLimit, clonedCartItems);
+    return new Cart(id, userAccountId, upperLimit, clonedCartItems);
   }
 
   public Optional<CartItem> itemByName(String itemName) {
