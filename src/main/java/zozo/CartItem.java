@@ -3,6 +3,7 @@ package zozo;
 import java.util.Objects;
 
 public class CartItem {
+  // UUID id;
   private String itemName;
   private int quantity;
   private int price;
