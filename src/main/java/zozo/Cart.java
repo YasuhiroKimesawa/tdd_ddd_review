@@ -27,6 +27,14 @@ public class Cart {
     this(id, userAccountId, upperLimit, new ArrayList<>());
   }
 
+  public UUID id() {
+    return id;
+  }
+
+  public UUID userAccountId() {
+    return userAccountId;
+  }
+
   public int upperLimit() {
     return upperLimit;
   }
@@ -36,8 +44,12 @@ public class Cart {
         .reduce(0, (result, element) -> result + element.totalPrice(), Integer::sum);
   }
 
+  public List<CartItem> cartItems() {
+    return new ArrayList<>(cartItems);
+  }
+
   public Cart addItem(String itemName, int quantity, int price) throws AddCartException {
-    var cartItem = new CartItem(itemName, quantity, price);
+    var cartItem = new CartItem(UUID.randomUUID(), id, itemName, quantity, price);
     var totalPrice = totalPrice() + cartItem.totalPrice();
     if (totalPrice > upperLimit) {
       throw new AddCartException();

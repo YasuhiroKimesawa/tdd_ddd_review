@@ -1,9 +1,12 @@
 package zozo;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class CartItem {
-  // UUID id;
+  private UUID id;
+
+  private UUID cartId;
   private String itemName;
   private int quantity;
   private int price;
@@ -26,16 +29,27 @@ public class CartItem {
   static final int CART_QUANTITY_MAX = 99;
   static final int CART_QUANTITY_MIN = 1;
 
-  public CartItem(String itemName, int quantity, int price) throws AddCartException {
+  public CartItem(UUID id, UUID cartId, String itemName, int quantity, int price)
+      throws AddCartException {
     if (quantity < CART_QUANTITY_MIN) {
       throw new AddCartException();
     }
     if (quantity > CART_QUANTITY_MAX) {
       throw new AddCartException();
     }
+    this.id = id;
+    this.cartId = cartId;
     this.itemName = itemName;
     this.quantity = quantity;
     this.price = price;
+  }
+
+  public UUID getId() {
+    return id;
+  }
+
+  public UUID getCartId() {
+    return cartId;
   }
 
   public int getPrice() {
@@ -51,7 +65,7 @@ public class CartItem {
   }
 
   public CartItem withQuantity(int value) throws AddCartException {
-    return new CartItem(itemName, value, price);
+    return new CartItem(id, cartId, itemName, value, price);
   }
 
   public int totalPrice() {
