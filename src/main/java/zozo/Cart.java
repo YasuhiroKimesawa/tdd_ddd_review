@@ -1,9 +1,6 @@
 package zozo;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Cart {
@@ -15,6 +12,22 @@ public class Cart {
   private int upperLimit;
 
   private List<CartItem> cartItems;
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Cart cart = (Cart) o;
+    return upperLimit == cart.upperLimit
+        && id.equals(cart.id)
+        && userAccountId.equals(cart.userAccountId)
+        && cartItems.equals(cart.cartItems);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, userAccountId, upperLimit, cartItems);
+  }
 
   public Cart(UUID id, UUID userAccountId, int upperLimit, List<CartItem> cartItems) {
     this.id = id;
