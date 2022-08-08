@@ -1,4 +1,4 @@
-package zozo;
+package zozo.domain.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 

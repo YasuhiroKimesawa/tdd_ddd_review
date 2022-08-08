@@ -1,4 +1,4 @@
-package zozo.infrastructure;
+package zozo.interface_adator.dao;
 
 public class CartRecord {
   private String id;

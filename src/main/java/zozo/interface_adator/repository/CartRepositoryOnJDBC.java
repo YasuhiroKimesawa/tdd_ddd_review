@@ -1,14 +1,18 @@
-package zozo;
+package zozo.interface_adator.repository;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import org.apache.ibatis.session.SqlSession;
-import zozo.infrastructure.CartItemMapper;
-import zozo.infrastructure.CartItemRecord;
-import zozo.infrastructure.CartMapper;
-import zozo.infrastructure.CartRecord;
+import zozo.domain.model.AddCartException;
+import zozo.domain.model.Cart;
+import zozo.domain.model.CartItem;
+import zozo.domain.repository.CartRepository;
+import zozo.interface_adator.dao.CartItemMapper;
+import zozo.interface_adator.dao.CartItemRecord;
+import zozo.interface_adator.dao.CartMapper;
+import zozo.interface_adator.dao.CartRecord;
 
 public class CartRepositoryOnJDBC implements CartRepository {
   private final SqlSession session;

@@ -7,15 +7,19 @@
         <environment id="development">
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
-                <property name="driver" value="org.h2.Driver"/>
-                <property name="url" value="jdbc:h2:tcp://localhost/~/test;MODE=MYSQL"/>
-                <property name="username" value="sa"/>
-                <property name="password" value=""/>
+<!--                <property name="driver" value="org.h2.Driver"/>-->
+                <property name="driver" value="${driver}"/>
+<!--                <property name="url" value="jdbc:h2:tcp://localhost:4321/~/test;MODE=MYSQL"/>-->
+                <property name="url" value="${url}"/>
+<!--                <property name="username" value="sa"/>-->
+                <property name="username" value="${userName}"/>
+<!--                <property name="password" value=""/>-->
+                <property name="password" value="${password}"/>
             </dataSource>
         </environment>
     </environments>
     <mappers>
-        <mapper class="zozo.infrastructure.CartMapper"/>
-        <mapper class="zozo.infrastructure.CartItemMapper"/>
+        <mapper class="zozo.interface_adator.dao.CartMapper"/>
+        <mapper class="zozo.interface_adator.dao.CartItemMapper"/>
     </mappers>
 </configuration>

@@ -1,4 +1,4 @@
-package zozo;
+package zozo.domain.model;
 
 import java.util.*;
 import java.util.stream.Collectors;
