@@ -1,18 +1,13 @@
 package zozo.domain.repository;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
-import java.util.Properties;
 import java.util.UUID;
-import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.MySQLContainer;
@@ -22,6 +17,8 @@ import org.testcontainers.utility.DockerImageName;
 import zozo.domain.model.AddCartException;
 import zozo.domain.model.Cart;
 import zozo.interface_adator.repository.CartRepositoryOnJDBC;
+import zozo.testing.utils.FlywayTestUtil;
+import zozo.testing.utils.SqlSessionFactoryUtil;
 
 @Testcontainers
 class CartRepositoryOnJDBCTest {
@@ -37,21 +34,8 @@ class CartRepositoryOnJDBCTest {
 
   @BeforeEach
   void setUp() throws IOException {
-    var configure = Flyway.configure();
-    configure.dataSource(
-        mysqlContainer.getJdbcUrl(), mysqlContainer.getUsername(), mysqlContainer.getPassword());
-    configure.locations("rdb-migration");
-    var flyway = configure.load();
-    flyway.migrate();
-
-    String resource = "mybatis-config.xml";
-    InputStream inputStream = Resources.getResourceAsStream(resource);
-    var properties = new Properties();
-    properties.put("driver", mysqlContainer.getDriverClassName());
-    properties.put("url", mysqlContainer.getJdbcUrl());
-    properties.put("userName", mysqlContainer.getUsername());
-    properties.put("password", mysqlContainer.getPassword());
-    sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream, properties);
+    FlywayTestUtil.migrate(mysqlContainer);
+    sqlSessionFactory = SqlSessionFactoryUtil.build(mysqlContainer);
   }
 
   @Test
@@ -61,6 +45,7 @@ class CartRepositoryOnJDBCTest {
       var id = UUID.randomUUID();
       var userAccountId = UUID.randomUUID();
       var expected = 100;
+
       var cart = new Cart(id, userAccountId, expected);
       cart = cart.addItem("商品1", 1, 50);
       repository.store(cart);
@@ -78,8 +63,6 @@ class CartRepositoryOnJDBCTest {
       var expected = 100;
       var cart = new Cart(id, userAccountId, expected);
       repository.store(cart);
-      // userRepository.store(user);
-      // groupRepository.store(group);
 
       var cartSavedOpt = repository.findById(id);
       assertEquals(cartSavedOpt, Optional.of(cart));
@@ -104,8 +87,9 @@ class CartRepositoryOnJDBCTest {
       repository.store(cart2);
 
       var cartSavedOpt = repository.findAllById(userAccountId);
-      assertEquals(cartSavedOpt, List.of(cart1, cart2));
-      session.commit();
+      assertTrue(cartSavedOpt.stream().anyMatch(cart -> cart.id().equals(cart1.id())));
+      assertTrue(cartSavedOpt.stream().anyMatch(cart -> cart.id().equals(cart2.id())));
+      session.rollback();
     }
   }
 
@@ -129,7 +113,7 @@ class CartRepositoryOnJDBCTest {
 
       var cartSavedOpt = repository.findAllById(userAccountId);
       assertEquals(cartSavedOpt, List.of(cart2));
-      session.commit();
+      session.rollback();
     }
   }
 }
