@@ -16,7 +16,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 import zozo.domain.model.AddCartException;
 import zozo.domain.model.Cart;
-import zozo.interface_adator.repository.CartRepositoryOnJDBC;
+import zozo.interface_adaptor.repository.CartRepositoryOnJDBC;
 import zozo.testing.utils.FlywayTestUtil;
 import zozo.testing.utils.SqlSessionFactoryUtil;
 

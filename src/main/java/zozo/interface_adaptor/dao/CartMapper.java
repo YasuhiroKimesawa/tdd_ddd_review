@@ -1,4 +1,4 @@
-package zozo.interface_adator.dao;
+package zozo.interface_adaptor.dao;
 
 import java.util.List;
 import java.util.Optional;

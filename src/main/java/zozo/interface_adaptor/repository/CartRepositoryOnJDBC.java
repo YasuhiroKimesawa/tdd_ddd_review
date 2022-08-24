@@ -1,4 +1,4 @@
-package zozo.interface_adator.repository;
+package zozo.interface_adaptor.repository;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,10 +9,10 @@ import zozo.domain.model.AddCartException;
 import zozo.domain.model.Cart;
 import zozo.domain.model.CartItem;
 import zozo.domain.repository.CartRepository;
-import zozo.interface_adator.dao.CartItemMapper;
-import zozo.interface_adator.dao.CartItemRecord;
-import zozo.interface_adator.dao.CartMapper;
-import zozo.interface_adator.dao.CartRecord;
+import zozo.interface_adaptor.dao.CartItemMapper;
+import zozo.interface_adaptor.dao.CartItemRecord;
+import zozo.interface_adaptor.dao.CartMapper;
+import zozo.interface_adaptor.dao.CartRecord;
 
 public class CartRepositoryOnJDBC implements CartRepository {
   private final SqlSession session;

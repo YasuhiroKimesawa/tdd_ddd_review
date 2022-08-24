@@ -12,7 +12,7 @@ import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
-import zozo.interface_adator.repository.CartRepositoryOnJDBC;
+import zozo.interface_adaptor.repository.CartRepositoryOnJDBC;
 import zozo.testing.utils.FlywayTestUtil;
 import zozo.testing.utils.SqlSessionFactoryUtil;
 
