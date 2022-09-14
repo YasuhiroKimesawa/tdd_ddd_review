@@ -2,11 +2,10 @@ package zozo.interface_adaptor.dao;
 
 import java.util.List;
 import java.util.Optional;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Flush;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
 
+import org.apache.ibatis.annotations.*;
+
+@Mapper
 public interface CartMapper {
   @Insert(
       "insert into carts (id, user_account_id, upper_limit) values(#{id}, #{userAccountId}, #{upperLimit})")

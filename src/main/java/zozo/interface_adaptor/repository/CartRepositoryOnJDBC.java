@@ -1,10 +1,7 @@
 package zozo.interface_adaptor.repository;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.Collectors;
-import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import zozo.domain.model.AddCartException;
 import zozo.domain.model.Cart;
 import zozo.domain.model.CartItem;
@@ -14,17 +11,28 @@ import zozo.interface_adaptor.dao.CartItemRecord;
 import zozo.interface_adaptor.dao.CartMapper;
 import zozo.interface_adaptor.dao.CartRecord;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+@Repository
 public class CartRepositoryOnJDBC implements CartRepository {
-  private final SqlSession session;
+//  private final SqlSession session;
   private final CartMapper cartMapper;
 
   private final CartItemMapper cartItemMapper;
 
-  public CartRepositoryOnJDBC(SqlSession session) {
-    this.session = session;
-    cartMapper = session.getMapper(CartMapper.class);
-    cartItemMapper = session.getMapper(CartItemMapper.class);
+  public CartRepositoryOnJDBC(CartMapper cartMapper, CartItemMapper cartItemMapper) {
+    this.cartMapper = cartMapper;
+    this.cartItemMapper = cartItemMapper;
   }
+
+//  public CartRepositoryOnJDBC(SqlSession session) {
+//    this.session = session;
+//    cartMapper = session.getMapper(CartMapper.class);
+//    cartItemMapper = session.getMapper(CartItemMapper.class);
+//  }
 
   @Override
   public void store(Cart aggregate) {
