@@ -6,15 +6,19 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.ClassRule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mybatis.spring.annotation.MapperScan;
 import org.mybatis.spring.boot.test.autoconfigure.AutoConfigureMybatis;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.util.TestPropertyValues;
@@ -23,9 +27,11 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.MySQLContainer;
@@ -39,20 +45,30 @@ import zozo.interface_adaptor.dao.CartMapper;
 import zozo.interface_adaptor.repository.CartRepositoryOnJDBC;
 import zozo.testing.utils.FlywayTestUtil;
 import zozo.testing.utils.SqlSessionFactoryUtil;
+import org.apache.ibatis.annotations.Mapper;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.test.context.ActiveProfiles;
 
-@RunWith(SpringRunner.class)
+@SpringBootApplication
+@MapperScan(annotationClass = Mapper.class, basePackages = "zozo")
+//@RunWith(SpringRunner.class)
 // @MybatisTest(includeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = { CartRepositoryOnJDBC.class }))
 @MybatisTest
-@Import(CartRepositoryOnJDBC.class)
-// @Testcontainers
+//@Import(CartRepositoryOnJDBC.class)
+@Testcontainers
 // @ContextConfiguration(initializers = {CartRepositoryOnJDBCTest.Initializer.class})
+//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@ActiveProfiles("test")
+@TestPropertySource(locations = "/application-test.yaml")
 class CartRepositoryOnJDBCTest {
 
   // SqlSessionFactory sqlSessionFactory;
-//  @Container
+    @Container
 //    @ClassRule
-    // @Container
-  static final MySQLContainer mysqlContainer =
+    static final MySQLContainer mysqlContainer =
           new MySQLContainer<>(DockerImageName.parse("mysql"))
                   .withUsername("sa")
                   .withPassword("test")
@@ -73,8 +89,11 @@ class CartRepositoryOnJDBCTest {
 //        }
 //    }
 
+  //@Autowired
+  //CartRepository cartRepository;
+
   @Autowired
-  CartRepository cartRepository;
+  CartMapper cartMapper;
 
 
   @DynamicPropertySource
@@ -86,12 +105,12 @@ class CartRepositoryOnJDBCTest {
 
   @BeforeEach
   void setUp() throws IOException {
-    FlywayTestUtil.migrate(mysqlContainer);
+    //FlywayTestUtil.migrate(mysqlContainer);
     // sqlSessionFactory = SqlSessionFactoryUtil.build(mysqlContainer);
   }
 
   @Test
-    public void dummy() {
+  public void dummy() {
 
   }
 
