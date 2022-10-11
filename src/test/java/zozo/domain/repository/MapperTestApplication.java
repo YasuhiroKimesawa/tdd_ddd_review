@@ -1,15 +1,12 @@
-package zozo.application;
+package zozo.domain.repository;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@MapperScan("zozo.interface_adaptor.dao")
+@MapperScan(annotationClass = Mapper.class, basePackages = "zozo")
 @ComponentScan("zozo.interface_adaptor.repository")
-public class Application {
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
-    }
+public class MapperTestApplication {
 }

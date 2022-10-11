@@ -1,6 +1,5 @@
 package zozo.interface_adaptor.repository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import zozo.domain.model.AddCartException;
 import zozo.domain.model.Cart;

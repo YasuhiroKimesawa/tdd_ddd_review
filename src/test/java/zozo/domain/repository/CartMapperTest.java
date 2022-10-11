@@ -10,22 +10,22 @@ import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
-import zozo.domain.model.Cart;
-
-import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import zozo.interface_adaptor.dao.CartMapper;
+import zozo.interface_adaptor.dao.CartRecord;
 
 @MybatisTest
 @Testcontainers
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class CartRepositoryOnJDBCTest {
+public class CartMapperTest {
     @Container
     static final MySQLContainer mysqlContainer =
             new MySQLContainer<>(DockerImageName.parse("mysql"))
                     .withUsername("sa")
                     .withPassword("test")
                     .withDatabaseName("test");
+
+    @Autowired
+    CartMapper cartMapper;
 
     @DynamicPropertySource
     static void registerProperties(DynamicPropertyRegistry registry) {
@@ -35,16 +35,9 @@ public class CartRepositoryOnJDBCTest {
         registry.add("spring.datasource.password", mysqlContainer::getPassword);
     }
 
-    @Autowired
-    CartRepository cartRepository;
-
     @Test
     void test() {
-        var cartId = UUID.randomUUID();
-        var userAccountId = UUID.randomUUID();
-        Cart cart = new Cart(cartId, userAccountId, 100);
-        cartRepository.store(cart);
-        var actual = cartRepository.findById(cartId).get();
-        assertEquals(actual, cart);
+        cartMapper.insertCart(new CartRecord("a", "b", 1));
     }
+
 }

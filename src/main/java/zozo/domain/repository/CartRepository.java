@@ -1,9 +1,10 @@
 package zozo.domain.repository;
 
+import zozo.domain.model.Cart;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import zozo.domain.model.Cart;
 
 public interface CartRepository {
 

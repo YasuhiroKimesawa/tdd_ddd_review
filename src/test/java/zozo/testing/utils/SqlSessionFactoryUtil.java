@@ -1,11 +1,12 @@
 package zozo.testing.utils;
 
-import java.io.IOException;
-import java.util.Properties;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.testcontainers.containers.MySQLContainer;
+
+import java.io.IOException;
+import java.util.Properties;
 
 public class SqlSessionFactoryUtil {
 

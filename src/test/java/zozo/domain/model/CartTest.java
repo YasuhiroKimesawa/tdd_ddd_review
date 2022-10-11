@@ -1,10 +1,11 @@
 package zozo.domain.model;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.UUID;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * 1. カートには購入できる上限金額を設定できる

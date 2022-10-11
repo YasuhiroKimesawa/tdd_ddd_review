@@ -1,10 +1,5 @@
 package zozo.use_case;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.io.IOException;
-import java.util.UUID;
-import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,9 +7,10 @@ import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
-import zozo.interface_adaptor.repository.CartRepositoryOnJDBC;
 import zozo.testing.utils.FlywayTestUtil;
 import zozo.testing.utils.SqlSessionFactoryUtil;
+
+import java.io.IOException;
 
 @Testcontainers
 class CreateCartUseCaseTest {

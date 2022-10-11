@@ -3,7 +3,7 @@ plugins {
     id("org.springframework.boot") version "2.7.4"
     id("io.spring.dependency-management") version "1.0.13.RELEASE"
     id("com.diffplug.spotless") version "6.3.0"
-    id("org.flywaydb.flyway") version "8.5.13"
+    // id("org.flywaydb.flyway") version "8.5.13"
 }
 
 group = "org.example"
@@ -15,20 +15,20 @@ java {
 }
 
 
-spotless {
-    java {
-        // Use the default importOrder configuration
-        importOrder()
-        removeUnusedImports()
+//spotless {
+//    java {
+//        // Use the default importOrder configuration
+//        importOrder()
+//        removeUnusedImports()
+//
+//        googleJavaFormat()          // has its own section below
+//    }
+//}
 
-        googleJavaFormat()          // has its own section below
-    }
-}
+//val spotlessApply = tasks.getByName("spotlessApply")
+// val build = tasks.getByName("build")
 
-val spotlessApply = tasks.getByName("spotlessApply")
-val build = tasks.getByName("build")
-
-build.dependsOn(spotlessApply)
+//build.dependsOn(spotlessApply)
 
 repositories {
     mavenCentral()
@@ -63,9 +63,9 @@ tasks.test {
     }
 }
 
-flyway {
-    url = "jdbc:h2:tcp://localhost/~/test"
-    user = "sa"
-    password = ""
-    locations = arrayOf("classpath:rdb-migration")
-}
+//flyway {
+//    url = "jdbc:h2:tcp://localhost/~/test"
+//    user = "sa"
+//    password = ""
+//    locations = arrayOf("classpath:rdb-migration")
+//}
