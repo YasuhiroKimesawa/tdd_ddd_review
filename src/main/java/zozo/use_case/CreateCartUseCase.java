@@ -1,10 +1,12 @@
 package zozo.use_case;
 
+import org.springframework.stereotype.Service;
 import zozo.domain.model.Cart;
 import zozo.domain.repository.CartRepository;
 
 import java.util.UUID;
 
+@Service
 public class CreateCartUseCase {
 
   private final CartRepository cartRepository;

@@ -1,5 +1,6 @@
 package zozo.interface_adaptor.repository;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.stereotype.Repository;
 import zozo.domain.model.AddCartException;
 import zozo.domain.model.Cart;
@@ -17,7 +18,6 @@ import java.util.stream.Collectors;
 
 @Repository
 public class CartRepositoryOnJDBC implements CartRepository {
-//  private final SqlSession session;
   private final CartMapper cartMapper;
 
   private final CartItemMapper cartItemMapper;
@@ -26,12 +26,6 @@ public class CartRepositoryOnJDBC implements CartRepository {
     this.cartMapper = cartMapper;
     this.cartItemMapper = cartItemMapper;
   }
-
-//  public CartRepositoryOnJDBC(SqlSession session) {
-//    this.session = session;
-//    cartMapper = session.getMapper(CartMapper.class);
-//    cartItemMapper = session.getMapper(CartItemMapper.class);
-//  }
 
   @Override
   public void store(Cart aggregate) {

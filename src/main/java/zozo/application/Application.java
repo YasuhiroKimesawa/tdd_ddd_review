@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @MapperScan("zozo.interface_adaptor.dao")
-@ComponentScan("zozo.interface_adaptor.repository")
+@ComponentScan({"zozo.interface_adaptor.http.controller", "zozo.interface_adaptor.repository", "zozo.use_case"})
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
