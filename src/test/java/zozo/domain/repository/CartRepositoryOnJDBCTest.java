@@ -29,8 +29,7 @@ public class CartRepositoryOnJDBCTest {
 
     @DynamicPropertySource
     static void registerProperties(DynamicPropertyRegistry registry) {
-        var jdbcUrl =  mysqlContainer.getJdbcUrl();
-        registry.add("spring.datasource.url", () -> jdbcUrl);
+        registry.add("spring.datasource.url", mysqlContainer::getJdbcUrl);
         registry.add("spring.datasource.username", mysqlContainer::getUsername);
         registry.add("spring.datasource.password", mysqlContainer::getPassword);
     }
